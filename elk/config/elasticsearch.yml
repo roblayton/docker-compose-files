@@ -1,0 +1,7 @@
+bootstrap.mlockall: true
+http.cors.allow-credentials: true
+http.cors.enabled: true
+http.cors.allow-origin: http://localhost:5601
+path:
+  logs: data/log
+#http.cors.allow-origin: http://graphs.roblayton.com

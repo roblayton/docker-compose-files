@@ -1,0 +1,4 @@
+elk/certs/logstash-forwarder.crt
+elk/certs/logstash-forwarder.key
+*.swp
+*.swo

@@ -1,0 +1,31 @@
+storage:
+  image: busybox
+  volumes:
+    - /data/log
+    - /usr/share/elasticsearch/data
+elasticsearch:
+  image: "elasticsearch:1.4"
+  volumes:
+    - config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  volumes_from:
+    - storage
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+logstash:
+  image: "logstash:1.4.2"
+  command: "logstash -f /usr/local/logstash/config/logstash.conf"
+  volumes:
+    - config/logstash.conf:/usr/local/logstash/config/logstash.conf
+    - certs/logstash-forwarder.crt:/etc/pki/tls/certs/logstash-forwarder.crt
+    - certs/logstash-forwarder.key:/etc/pki/tls/private/logstash-forwarder.key
+  links:
+    - elasticsearch:elasticsearch
+  ports:
+    - "5000:5000"
+kibana4:
+  image: digitalwonderland/kibana
+  links:
+    - elasticsearch:elasticsearch
+  ports: 
+    - "5601:5601"

@@ -1,0 +1,34 @@
+storage:
+  image: busybox
+  volumes:
+    - /data
+influxdb:
+  image: "savoirfairelinux/influxdb"
+  environment:
+    PRE_CREATE_DB: "shinken"
+  volumes_from:
+    - storage
+  ports:
+    - "8083:8083"
+    - "8086:8086" 
+grafana:
+  image: "tutum/grafana"
+  links:
+    - influxdb:influxdb
+  ports:
+    - "8080:80"
+  environment:
+    INFLUXDB_PROTO: "influxdb"
+    INFLUXDB_HOST: "localhost"
+    INFLUXDB_PORT: "8086"
+    INFLUXDB_NAME: "shinken"
+    INFLUXDB_USER: "root"
+    INFLUXDB_PASS: "root"
+shinken:
+  #image: "roblayton/shinken"
+  #image: "rohit01/shinken"
+  build: ../../docker_shinken/shinken_influxdb/.
+  links:
+    - influxdb:influxdb
+  ports:
+    - "80:80" 
