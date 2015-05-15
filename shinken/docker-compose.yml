@@ -3,32 +3,46 @@ storage:
   volumes:
     - /data
 influxdb:
-  image: "savoirfairelinux/influxdb"
+  image: "tutum/influxdb"
   environment:
-    PRE_CREATE_DB: "shinken"
+    PRE_CREATE_DB: "shinken;collectd"
   volumes_from:
     - storage
+  volumes:
+    - influxdb/config.toml:/config/config.toml
   ports:
     - "8083:8083"
     - "8086:8086" 
-grafana:
-  image: "tutum/grafana"
+collectdproxy:
+  image: "falzm/docker-influxdb-collectd-proxy"
+  ports:
+    - "8096:8096/udp" 
+  environment:
+    ICP_HOST: "influxdb:8086"
+    ICP_DATABASE: "collectd"
+    ICP_USERNAME: "root"
+    ICP_PASSWORD: "root"
+    ICP_NORMALIZE: "true"
+    ICP_VERBOSE: "false"
   links:
-    - influxdb:influxdb
+    - influxdb
+grafana:
+  image: "savoirfairelinux/grafana"
+  links:
+    - influxdb
   ports:
     - "8080:80"
   environment:
-    INFLUXDB_PROTO: "influxdb"
-    INFLUXDB_HOST: "localhost"
+    INFLUXDB_HOST: "influxdb"
     INFLUXDB_PORT: "8086"
     INFLUXDB_NAME: "shinken"
     INFLUXDB_USER: "root"
     INFLUXDB_PASS: "root"
 shinken:
   #image: "roblayton/shinken"
-  #image: "rohit01/shinken"
-  build: ../../docker_shinken/shinken_influxdb/.
+  build: . 
   links:
-    - influxdb:influxdb
+    - influxdb
+    - collectdproxy
   ports:
     - "80:80" 
