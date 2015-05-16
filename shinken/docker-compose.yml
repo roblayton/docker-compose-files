@@ -31,7 +31,7 @@ grafana:
   links:
     - influxdb
   ports:
-    - "8080:80"
+    - "80:80"
   environment:
     INFLUXDB_HOST: "influxdb"
     INFLUXDB_PORT: "8086"
@@ -45,4 +45,5 @@ shinken:
     - influxdb
     - collectdproxy
   ports:
-    - "80:80" 
+    - "7767:7767" 
+    - "7768:7768" 

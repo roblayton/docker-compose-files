@@ -2,15 +2,13 @@
 FROM        debian:wheezy
 MAINTAINER  Rohit Gupta
 
-# Install Shinken, Nagios plugins, nginx, and supervisord
+# Install Shinken, Nagios plugins, and supervisord
 RUN         apt-get update && apt-get install -y python-pip \
                 python-pycurl \
                 python-cherrypy3 \
                 python-paramiko \
                 nagios-plugins \
                 libsys-statistics-linux-perl \
-                nginx \
-                openssh-server \
                 ntp \
                 libssl-dev \
                 rsyslog \
@@ -36,7 +34,6 @@ RUN         su - shinken -c 'shinken --init' && \
                 su - shinken -c 'shinken install pickle-retention-file-scheduler' && \
                 su - shinken -c 'shinken install booster-nrpe' && \
                 su - shinken -c 'shinken install linux-snmp' && \
-                su - shinken -c 'shinken install ssh' && \
                 #su - shinken -c 'shinken install collectd' && \
                 su - shinken -c 'shinken install mod-influxdb'
 
@@ -54,14 +51,6 @@ RUN         cd /usr/src/nrpe-2.15/ && \
                 mv /usr/local/nagios/libexec/check_nrpe /usr/lib/nagios/plugins/check_nrpe && \
                 cd / && \
                 rm -rf /usr/src/nrpe-2.15
-
-# Configure nginx
-ADD         shinken/shinken_nginx.conf /etc/nginx/sites-available/shinken_nginx.conf
-RUN         mkdir -p /var/log/nginx && \
-                rm -f /etc/nginx/sites-enabled/default && \
-                ln -sf /etc/nginx/sites-available/shinken_nginx.conf /etc/nginx/sites-enabled/shinken_nginx.conf && \
-                update-rc.d -f nginx remove && \
-                echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Configure Shinken modules
 ADD         shinken/shinken.cfg /etc/shinken/shinken.cfg
@@ -94,8 +83,9 @@ VOLUME      ["/etc/shinken/custom_configs", "/usr/local/custom_plugins"]
 # configure supervisor
 ADD         supervisor/conf.d/* /etc/supervisor/conf.d/
 
-# Expost port 80 (nginx)
-EXPOSE  80
+# Expose webui
+EXPOSE  7767
+EXPOSE  7768
 
 # Default docker process
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf", "-n"]
