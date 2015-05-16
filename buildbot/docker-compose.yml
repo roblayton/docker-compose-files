@@ -1,0 +1,21 @@
+storage:
+  image: busybox
+  volumes:
+    - /master
+bbmaster:
+  build: "purism/buildbot-master"
+  volumes_from:
+    - storage
+  volumes:
+    - config/master.cfg:/master/master.cfg
+  ports:
+    - "9989:9989" 
+    - "8010:8010" 
+bbslave:
+  build: "purism/buildbot-slave"
+  environment:
+    MASTER: "bbmaster:9989"
+    #SLAVE_NAME: "slaveuser"
+    #SLAVE_PASSWORD: "slavepass"
+  links:
+    - bbmaster
