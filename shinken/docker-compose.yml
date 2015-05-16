@@ -3,7 +3,7 @@ storage:
   volumes:
     - /data
 influxdb:
-  image: "tutum/influxdb"
+  image: "tutum/influxdb:0.8.8"
   environment:
     PRE_CREATE_DB: "shinken;collectd"
   volumes_from:
@@ -13,6 +13,7 @@ influxdb:
   ports:
     - "8083:8083"
     - "8086:8086" 
+    - "8090:8090" 
 collectdproxy:
   image: "falzm/docker-influxdb-collectd-proxy"
   ports:
@@ -27,18 +28,11 @@ collectdproxy:
   links:
     - influxdb
 grafana:
-  image: "tutum/grafana"
+  image: "grafana/grafana:2.0.2"
   links:
     - influxdb
   ports:
-    - "80:80"
-  environment:
-    INFLUXDB_HOST: "influxdb"
-    INFLUXDB_PORT: "8086"
-    INFLUXDB_NAME: "collectd"
-    INFLUXDB_USER: "root"
-    INFLUXDB_PASS: "root"
-    INFLUXDB_IS_GRAFANA: "true"
+    - "3000:3000"
 shinken:
   #image: "roblayton/shinken"
   build: . 
