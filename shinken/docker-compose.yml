@@ -27,7 +27,7 @@ collectdproxy:
   links:
     - influxdb
 grafana:
-  image: "savoirfairelinux/grafana"
+  image: "tutum/grafana"
   links:
     - influxdb
   ports:
@@ -35,9 +35,10 @@ grafana:
   environment:
     INFLUXDB_HOST: "influxdb"
     INFLUXDB_PORT: "8086"
-    INFLUXDB_NAME: "shinken"
+    INFLUXDB_NAME: "collectd"
     INFLUXDB_USER: "root"
     INFLUXDB_PASS: "root"
+    INFLUXDB_IS_GRAFANA: "true"
 shinken:
   #image: "roblayton/shinken"
   build: . 
