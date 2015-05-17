@@ -1,0 +1,44 @@
+storage:
+  image: busybox
+  volumes:
+    - /data/log
+    - /usr/share/elasticsearch/data
+redis:
+  image: redis
+  ports:
+    - "6379:6379"
+elasticsearch:
+  image: "elasticsearch:1.4"
+  volumes:
+    - config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  volumes_from:
+    - storage
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+logstash:
+  image: "logstash:1.4.2"
+  command: "logstash -f /usr/local/logstash/config/logstash.conf"
+  volumes:
+    - config/logstash.conf:/usr/local/logstash/config/logstash.conf
+    - patterns:/etc/logstash/patterns
+  links:
+    - elasticsearch
+    - redis
+  ports:
+    - "5000:5000"
+kibana4:
+  image: digitalwonderland/kibana
+  links:
+    - elasticsearch
+  ports: 
+    - "5601:5601"
+beaver:
+  image: "ombitron/docker-beaver"
+  links:
+    - redis
+  environment:
+    BEAVER_OPTS: "-c /etc/beaver/conf -t redis"
+  volumes:
+    - /var/lib/docker/containers:/var/lib/docker/containers
+    - config/beaver.conf:/etc/beaver/conf
