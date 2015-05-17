@@ -1,0 +1,7 @@
+beaver:
+  image: "ombitron/docker-beaver"
+  environment:
+    BEAVER_OPTS: "-c /etc/beaver/conf"
+  volumes:
+    - /var/lib/docker/containers:/var/lib/docker/containers
+    - config/beaver.conf:/etc/beaver/conf

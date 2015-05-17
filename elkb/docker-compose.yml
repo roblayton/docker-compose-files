@@ -33,12 +33,3 @@ kibana4:
     - elasticsearch
   ports: 
     - "5601:5601"
-beaver:
-  image: "ombitron/docker-beaver"
-  links:
-    - redis
-  environment:
-    BEAVER_OPTS: "-c /etc/beaver/conf -t redis"
-  volumes:
-    - /var/lib/docker/containers:/var/lib/docker/containers
-    - config/beaver.conf:/etc/beaver/conf
