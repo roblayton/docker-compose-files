@@ -1,4 +1,5 @@
 elk/certs/logstash-forwarder.crt
 elk/certs/logstash-forwarder.key
+elkb/sec/htpasswd.users
 *.swp
 *.swo

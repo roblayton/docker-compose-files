@@ -3,6 +3,8 @@ storage:
   volumes:
     - /data/log
     - /usr/share/elasticsearch/data
+  environment:
+    - "constraint:node==elon"
 elasticsearch:
   image: "elasticsearch:1.4"
   volumes:
@@ -12,6 +14,8 @@ elasticsearch:
   ports:
     - "9200:9200"
     - "9300:9300"
+  environment:
+    - "constraint:node==elon"
 logstash:
   image: "logstash:1.4.2"
   command: "logstash -f /usr/local/logstash/config/logstash.conf"
@@ -23,9 +27,13 @@ logstash:
     - elasticsearch:elasticsearch
   ports:
     - "5000:5000"
+  environment:
+    - "constraint:node==elon"
 kibana4:
   image: digitalwonderland/kibana
   links:
     - elasticsearch:elasticsearch
   ports: 
     - "5601:5601"
+  environment:
+    - "constraint:node==elon"

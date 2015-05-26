@@ -1,0 +1,4 @@
+web:
+  image: "codeboxsystems/codeboxsystems:1.0.0"
+  ports:
+    - "80:80"

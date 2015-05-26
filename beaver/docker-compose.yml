@@ -1,7 +1,12 @@
+storage:
+  build: .
+  volumes:
+    - /data
 beaver:
   image: "ombitron/docker-beaver"
   environment:
-    BEAVER_OPTS: "-c /etc/beaver/conf"
+    BEAVER_OPTS: "-c /data/beaver.conf"
+  volumes_from:
+    - storage
   volumes:
     - /var/lib/docker/containers:/var/lib/docker/containers
-    - config/beaver.conf:/etc/beaver/conf
