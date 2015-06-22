@@ -1,0 +1,23 @@
+storage:
+  build: .
+  volumes:
+    - /master
+    - /slave
+bbmaster:
+  #image: roblayton/buildbot-master:1.0.0
+  build: ../../docker-buildbot/master
+  volumes_from:
+    - storage
+  ports: 
+    - "8010:8010"
+    - "9989:9989"
+bbslave:
+  build: ../../docker-buildbot/slave
+  links:
+    - bbmaster:bbmaster
+  environment:
+    MASTER: "bbmaster:9989"
+    SLAVE_NAME: example-slave
+    SLAVE_PASSWORD: replaceme
+  volumes_from:
+    - storage
