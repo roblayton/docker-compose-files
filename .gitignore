@@ -1,8 +1,8 @@
 elk/certs/logstash-forwarder.crt
 elk/certs/logstash-forwarder.key
 elkb/sec/htpasswd.users
-docker-registry/certs/*.crt
-docker-registry/certs/*.key
-docker-registry/certs/passwd
+docker-registry-secure/certs/*.crt
+docker-registry-secure/certs/*.key
+docker-registry-secure/certs/passwd
 *.swp
 *.swo
