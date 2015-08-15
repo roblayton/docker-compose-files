@@ -4,5 +4,6 @@ elkb/sec/htpasswd.users
 docker-registry-secure/certs/*.crt
 docker-registry-secure/certs/*.key
 docker-registry-secure/certs/passwd
+local-server/docker-compose-custom.yml
 *.swp
 *.swo

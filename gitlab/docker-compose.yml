@@ -1,11 +1,15 @@
-postgres:
-  image: paintedfox/postgresql
-  environment:
-    - USER=gitlab
-    - PASS=password
-    - DB=gitlab_local
+storage:
+  build: .
   volumes:
+    - /data
+    - /srv/docker/gitlab/gitlab:/home/git/data
     - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+postgresql:
+  image: postgres
+  environment:
+    - POSTGRES_USER=gitlab
+  volumes_from:
+    - storage
 redis:
   image: redis
   command: "redis-server /data/redis.conf"

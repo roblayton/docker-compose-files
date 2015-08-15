@@ -12,12 +12,10 @@ redis:
     - storage
   ports:
     - "6379:6379"
-postgres:
-  image: paintedfox/postgresql
+postgresql:
+  image: postgres
   environment:
-    - USER=gitlab
-    - PASS=password
-    - DB=gitlab_local
+    - POSTGRES_USER=gitlab
   volumes_from:
     - storage
 registry:
