@@ -71,3 +71,12 @@ gitlab:
     - GITLAB_BACKUP_TIME=01:00
   volumes_from:
     - storage
+nginx:
+  image: nginx
+  command: "nginx -c /data/nginx.conf -g 'daemon off;'"
+  links:
+    - registry:registry
+  ports:
+    - "443:443"
+  volumes_from:
+    - storage

@@ -29,11 +29,12 @@ registry:
     REGISTRY_HTTP_TLS_CERTIFICATE: "/data/selfsigned.crt"
     REGISTRY_HTTP_TLS_KEY: "/data/selfsigned.key"
     REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
-    #DOCKER_OPTS: "--insecure-registry 192.168.99.102:443"
   ports:
     - "5000:5000"
 frontend:
   image: konradkleine/docker-registry-frontend
+  links:
+    - registry:registry
   ports:
     - "8081:80"
   environment:
@@ -42,6 +43,8 @@ frontend:
 nginx:
   image: nginx
   command: "nginx -c /data/nginx.conf -g 'daemon off;'"
+  links:
+    - registry:registry
   ports:
     - "443:443"
   volumes_from:
