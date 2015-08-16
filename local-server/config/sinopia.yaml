@@ -2,18 +2,21 @@
 storage: /opt/sinopia/storage
 
 web:
-  # enable: true
-
+  enable: true
   title: Sinopia
   # logo: logo.png
   # template: custom.hbs
 
-auth:
-  htpasswd:
-    file: /data/passwd
-    # Maximum amount of users allowed to register, defaults to "+inf".
-    # You can set this to -1 to disable registration.
-    max_users: -1
+users:
+  admin:
+    password: 613a5389aee3a26c462de0172bbb154c6ebeb34a
+
+#auth:
+  #htpasswd:
+    #file: /data/passwd
+    ## Maximum amount of users allowed to register, defaults to "+inf".
+    ## You can set this to -1 to disable registration.
+    #max_users: -1
 
 # a list of other known repositories we can talk to
 uplinks:
