@@ -1,5 +1,5 @@
 # path to a directory with all packages
-storage: ./storage/cache
+storage: /sinopia/storage/cache
 
 web:
   # enable: true
