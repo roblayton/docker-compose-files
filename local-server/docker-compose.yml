@@ -74,6 +74,7 @@ gitlab:
     - storage
 sinopia:
   image: keyvanfatehi/sinopia
+  command: "/opt/sinopia/node_modules/sinopia/bin/sinopia -c /opt/sinopia/config.yml"
   ports:
     - "4873:4873"
   volumes_from:
