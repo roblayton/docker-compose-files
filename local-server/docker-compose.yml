@@ -73,7 +73,7 @@ gitlab:
   volumes_from:
     - storage
 sinopia:
-  image: rnbwd/sinopia:1.4.0
+  image: rnbwd/sinopia
   ports:
     - "4873:4873"
   volumes_from:
