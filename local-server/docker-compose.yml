@@ -74,6 +74,7 @@ gitlab:
     - storage
 sinopia:
   image: gazaro/sinopia
+  command: "/sinopia/bin/sinopia"
   ports:
     - "4873:4873"
   volumes_from:
