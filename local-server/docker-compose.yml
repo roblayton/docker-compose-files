@@ -74,7 +74,7 @@ gitlab:
     - storage
 sinopia:
   image: octoblu/sinopia
-  command: "ls /opt; node /opt/sinopia/node_modules/sinopia/bin/sinopia --config /opt/sinopia/config.yml"
+  command: "node /opt/sinopia/node_modules/sinopia/bin/sinopia --config /opt/sinopia/config.yml"
   ports:
     - "4873:4873"
   volumes_from:
