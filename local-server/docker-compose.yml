@@ -2,6 +2,7 @@ storage:
   build: .
   volumes:
     - /data
+    - /data/npmstorage
     - /var/lib/docker/registry
     - /srv/docker/gitlab/gitlab:/home/git/data
     - /srv/docker/gitlab/postgresql:/var/lib/postgresql
@@ -72,8 +73,8 @@ gitlab:
   volumes_from:
     - storage
 sinopia:
-  image: octoblu/sinopia
-  command: "node /opt/sinopia/node_modules/sinopia/bin/sinopia --config /data/sinopia.yaml"
+  image: rnbwd/sinopia
+  command: "/sinopia/bin/sinopia --config /data/sinopia.yaml"
   ports:
     - "4873:4873"
   volumes_from:

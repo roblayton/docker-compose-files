@@ -1,5 +1,5 @@
 # path to a directory with all packages
-storage: /opt/sinopia/storage
+storage: /data/npmstorage
 
 web:
   enable: true
@@ -9,7 +9,7 @@ web:
 
 users:
   admin:
-    password: 613a5389aee3a26c462de0172bbb154c6ebeb34a
+    password: '613a5389aee3a26c462de0172bbb154c6ebeb34a'
 
 #auth:
   #htpasswd:
