@@ -1,0 +1,80 @@
+storage:
+  build: .
+  volumes:
+    - /data
+    - /var/lib/docker/registry
+    - /srv/docker/gitlab/gitlab:/home/git/data
+    - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+redis:
+  image: redis
+  command: "redis-server /data/redis.conf"
+  volumes_from:
+    - storage
+  ports:
+    - "6379:6379"
+postgresql:
+  image: postgres
+  environment:
+    - POSTGRES_USER=gitlab
+  volumes_from:
+    - storage
+registry:
+  restart: always
+  image: registry:0.9.1
+  links:
+    - redis:redis
+  volumes_from:
+    - storage
+  environment:
+    DOCKER_REGISTRY_CONFIG: "/data/registry.yml"
+    SETTINGS_FLAVOR: "local"
+    SEARCH_BACKEND: sqlalchemy
+    CACHE_REDIS_HOST: redis
+    CACHE_REDIS_PORT: 6379 
+    CACHE_LRU_REDIS_HOST: redis
+    CACHE_LRU_REDIS_PORT: 6379
+    REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/docker/registry
+  ports:
+    - "5000:5000"
+registryfrontend:
+  image: konradkleine/docker-registry-frontend
+  links:
+    - registry:registry
+  ports:
+    - "8081:80"
+  environment:
+    ENV_DOCKER_REGISTRY_HOST: registry
+    ENV_DOCKER_REGISTRY_PORT: 5000
+gitlab:
+  image: gitlab/gitlab-ce:latest
+  links:
+    - redis:redis
+    - postgresql:postgresql
+  ports:
+    - "10080:80"
+    - "10022:22"
+  environment:
+    - SMTP_ENABLED=false
+    - SMTP_DOMAIN=www.example.com
+    - SMTP_HOST=smtp.gmail.com
+    - SMTP_PORT=587
+    - SMTP_USER=mailer@example.com
+    - SMTP_PASS=password
+    - SMTP_STARTTLS=true
+    - SMTP_AUTHENTICATION=login
+    - GITLAB_HOST=localhost
+    - GITLAB_PORT=10080
+    - GITLAB_SSH_PORT=10022
+    - GITLAB_EMAIL=admin@example.com
+    - GITLAB_EMAIL_REPLY_TO=noreply@example.com
+    - GITLAB_BACKUPS=daily
+    - GITLAB_BACKUP_TIME=01:00
+  volumes_from:
+    - storage
+nginx:
+  image: nginx
+  command: "nginx -c /data/nginx.conf -g 'daemon off;'"
+  ports:
+    - "443:443"
+  volumes_from:
+    - storage
