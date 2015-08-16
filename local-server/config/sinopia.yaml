@@ -7,7 +7,7 @@
 #
 
 # path to a directory with all packages
-storage: /opt/sinopia/storage
+storage: /sinopia/storage
 
 auth:
   htpasswd:

@@ -5,8 +5,7 @@ storage:
     - /var/lib/docker/registry
     - /srv/docker/gitlab/gitlab:/home/git/data
     - /srv/docker/gitlab/postgresql:/var/lib/postgresql
-    - /opt/sinopia
-    - /etc/sinopia
+    - /sinopia
 redis:
   image: redis
   command: "redis-server /data/redis.conf"
@@ -74,7 +73,7 @@ gitlab:
   volumes_from:
     - storage
 sinopia:
-  image: octoblu/sinopia
+  image: gazaro/sinopia
   ports:
     - "4873:4873"
   volumes_from:
