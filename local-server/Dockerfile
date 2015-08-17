@@ -1,8 +1,6 @@
 FROM busybox
 MAINTAINER Rob Layton hire@roblayton.com
 
-ADD /data
-
 ADD ["config/registry.yml", "/media/data1/docker/data/registry.yml"]
 ADD ["config/redis.conf", "/media/data1/docker/data/redis.conf"]
 ADD ["config/nginx.conf", "/media/data1/docker/data/nginx.conf"]
