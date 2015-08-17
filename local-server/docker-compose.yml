@@ -1,11 +1,11 @@
 storage:
   build: .
   volumes:
-    - /data
-    - /data/npmstorage
-    - /var/lib/docker/registry
-    - /srv/docker/gitlab/gitlab:/home/git/data
-    - /srv/docker/gitlab/postgresql:/var/lib/postgresql
+    - /media/data1/docker/data:/data
+    - /media/data1/docker/npm:/data/npmstorage
+    - /media/data1/docker/dockerregistry:/var/lib/docker/registry
+    - /media/data1/docker/gitlab:/home/git/data
+    - /media/data1/docker/gitlab/postgresql:/var/lib/postgresql
 redis:
   image: redis
   command: "redis-server /data/redis.conf"
