@@ -1,5 +1,5 @@
 # path to a directory with all packages
-storage: /media/data1/docker/npmstorage
+storage: /data/npmstorage
 
 web:
   enable: true
