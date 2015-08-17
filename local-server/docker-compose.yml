@@ -1,9 +1,9 @@
 storage:
   build: .
   volumes:
-    - /media/data1/docker/data:/data
-    - /media/data1/docker/npm:/data/npmstorage
-    - /media/data1/docker/dockerregistry:/var/lib/docker/registry
+    - /media/data1/docker:/data
+    - /media/data1/docker/npmstorage:/data/npmstorage
+    - /media/data1/docker/registry:/var/lib/docker/registry
     - /media/data1/docker/gitlab:/home/git/data
     - /media/data1/docker/gitlab/postgresql:/var/lib/postgresql
 redis:
