@@ -8,7 +8,7 @@ storage:
     - /media/data1/docker/gitlab/postgresql:/var/lib/postgresql
 redis:
   image: redis
-  command: "redis-server /media/data1/docker/redis.conf"
+  command: "redis-server /data/redis.conf"
   volumes_from:
     - storage
   ports:
@@ -27,7 +27,7 @@ registry:
   volumes_from:
     - storage
   environment:
-    DOCKER_REGISTRY_CONFIG: "/media/data1/docker/registry.yml"
+    DOCKER_REGISTRY_CONFIG: "/data/registry.yml"
     SETTINGS_FLAVOR: "local"
     SEARCH_BACKEND: sqlalchemy
     CACHE_REDIS_HOST: redis
@@ -74,14 +74,14 @@ gitlab:
     - storage
 sinopia:
   image: rnbwd/sinopia
-  command: "/sinopia/bin/sinopia --config /media/data1/docker/sinopia.yaml"
+  command: "/sinopia/bin/sinopia --config /data/sinopia.yaml"
   ports:
     - "4873:4873"
   volumes_from:
     - storage
 nginx:
   image: nginx
-  command: "nginx -c /media/data1/docker/nginx.conf -g 'daemon off;'"
+  command: "nginx -c /data/nginx.conf -g 'daemon off;'"
   links:
     - registry:registry
   ports:
