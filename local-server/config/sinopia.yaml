@@ -1,5 +1,5 @@
 # path to a directory with all packages
-storage: /data/npmstorage
+storage: /opt/sinopia/storage
 
 web:
   enable: true
@@ -8,8 +8,8 @@ web:
   # template: custom.hbs
 
 users:
-  admin:
-    password: '613a5389aee3a26c462de0172bbb154c6ebeb34a'
+  roblayton:
+    password: 'bf80fa91b8711f054e1f7685cdb9b8bf5b250909'
 
 #auth:
   #htpasswd:

@@ -2,10 +2,12 @@ storage:
   build: .
   volumes:
     - /data
-    - /data/npmstorage
-    - /data/docker/registry:/var/lib/docker/registry
-    - /data/gitlab:/home/git/data
-    - /data/gitlab/postgresql:/var/lib/postgresql
+    - /data/sinopia/storage:/opt/sinopia/storage
+    - /data/docker/registry:/tmp/registry
+    - /data/gitlab/data:/var/opt/gitlab
+    - /data/gitlab/logs:/var/log/gitlab
+    - /data/gitlab/config:/etc/gitlab
+    - /data/postgresql:/var/lib/postgresql
 redis:
   image: redis
   command: "redis-server /data/redis.conf"
@@ -34,7 +36,6 @@ registry:
     CACHE_REDIS_PORT: 6379 
     CACHE_LRU_REDIS_HOST: redis
     CACHE_LRU_REDIS_PORT: 6379
-    REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/docker/registry
   ports:
     - "5000:5000"
 registryfrontend:
@@ -84,6 +85,8 @@ nginx:
   command: "nginx -c /data/nginx.conf -g 'daemon off;'"
   links:
     - registry:registry
+    - gitlab:gitlab
+    - sinopia:sinopia
   ports:
     - "443:443"
   volumes_from:
