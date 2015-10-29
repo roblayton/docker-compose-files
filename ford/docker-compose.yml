@@ -1,0 +1,22 @@
+backend:
+  #image: "codeboxsystems/codeboxsystems-backend"
+  build: ../../codeboxsystems-backend
+  ports:
+    - "5000:5000"
+frontend:
+  #image: "codeboxsystems/codeboxsystems-site"
+  build: ../../codeboxsystems-site
+  ports:
+    - "443:443"
+solidisiodocs:
+  build: ../../solidis-io-docs
+  ports:
+    - "3000:3000"
+chemiciodocs:
+  build: ../../chemic-io-docs
+  ports:
+    - "3001:3001"
+webserver:
+  build: .
+  ports:
+    - "80:80"

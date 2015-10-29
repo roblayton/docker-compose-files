@@ -1,0 +1,2 @@
+# Volta
+A persistent slave

@@ -1,0 +1,11 @@
+storage:
+  image: busybox
+  volumes:
+    - /data/db
+mongodb:
+  image: "mongo:latest"
+  ports:
+    - "27017:27017"
+  command: "--smallfiles"
+  volumes_from:
+    - storage
