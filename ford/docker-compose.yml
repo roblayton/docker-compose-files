@@ -6,17 +6,22 @@ backend:
 frontend:
   #image: "codeboxsystems/codeboxsystems-site"
   build: ../../codeboxsystems-site
+  links:
+    - backend
   ports:
     - "443:443"
-solidisiodocs:
-  build: ../../solidis-io-docs
+solidisdocs:
+  build: ../../solidis-docs
   ports:
-    - "3000:3000"
-chemiciodocs:
-  build: ../../chemic-io-docs
+    - "3000:80"
+liquidisdocs:
+  build: ../../liquidis-docs
   ports:
-    - "3001:3001"
+    - "3001:80"
 webserver:
   build: .
+  links:
+    - solidisdocs
+    - liquidisdocs
   ports:
     - "80:80"
